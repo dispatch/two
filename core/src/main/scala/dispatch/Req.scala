@@ -12,7 +12,7 @@ import java.net.URI
   */
 case class Req(
   requestBuilder: DispatchRequestBuilder = DispatchRequestBuilder()
-) extends UrlSugar with MethodSugar {
+) extends AuthSugar with UrlSugar with MethodSugar {
   def subject = this
 
   /**
