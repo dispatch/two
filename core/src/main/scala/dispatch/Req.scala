@@ -64,20 +64,29 @@ case class Req(
   }
 
   /**
-   * Set a header
+   * Add a header
    */
-  def setHeader(name: String, value: String) = {
+  def addHeader(name: String, value: String) = {
     Req(requestBuilder.copy(
       headers = requestBuilder.headers.concat(Map(name -> value))
     ))
   }
 
   /**
-   * Set multiple headers
+   * Add multiple headers
    */
-  def setHeaders(headers: Map[String, String]) = {
+  def addHeaders(headers: Seq[(String, String)]) = {
     Req(requestBuilder.copy(
       headers = requestBuilder.headers.concat(headers)
+    ))
+  }
+
+  /**
+   * Remove all headers with a specific name
+   */
+  def removeHeaders(name: String) = {
+    Req(requestBuilder.copy(
+      headers = requestBuilder.headers.filterNot(_._1.equals(name))
     ))
   }
 

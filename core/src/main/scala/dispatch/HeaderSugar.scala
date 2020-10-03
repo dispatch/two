@@ -8,7 +8,7 @@ trait HeaderSugar extends RequestSugar {
   def <:< (hs: Iterable[(String,String)]) = {
     hs.foldLeft(subject) {
       case (s, (key, value)) =>
-        s.setHeader(key, value)
+        s.addHeader(key, value)
     }
   }
 

@@ -6,11 +6,12 @@ import java.net.URI
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import scala.collection.Map
+import scala.collection.Seq
 
 case class DispatchRequestBuilder(
   method: String = "GET",
   methodExplicitlySet: Boolean = false,
-  headers: Map[String, String] = Map.empty,
+  headers: Seq[(String, String)] = Seq.empty,
   queryParams: Map[String, String] = Map.empty,
   url: String = "",
   bodyContent: DispatchBodyContent = DispatchBodyContent.None,
