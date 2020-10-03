@@ -16,6 +16,11 @@ case class DispatchRequestBuilder(
   bodyContent: DispatchBodyContent = DispatchBodyContent.None,
   extraBuilderFuncs: HttpRequest.Builder => HttpRequest.Builder = identity
 ) {
+  private val CONTENT_TYPE_HEADER_NAME = "Content-Type"
+  private val DEFAULT_CONTENT_TYPE = "text/plain; charset=utf8"
+  private val USER_AGENT_HEADER_NAME = "User-Agent"
+  private val DEFAULT_USER_AGENT_PREFIX = "Dispatch/"
+
   def build: HttpRequest = {
     val fullQueryParams = queryParams.map({
       case (key, value) if ! value.nonEmpty =>
@@ -40,9 +45,14 @@ case class DispatchRequestBuilder(
         builder = builder.setHeader(name, value)
     }
 
-    if(! headers.contains("Content-Type")) {
+    if(! headers.contains(CONTENT_TYPE_HEADER_NAME)) {
       // Default content type header
-      builder.setHeader("Content-Type", "text/plain; charset=utf8")
+      builder.setHeader(CONTENT_TYPE_HEADER_NAME, DEFAULT_CONTENT_TYPE)
+    }
+
+    if(! headers.contains(USER_AGENT_HEADER_NAME)) {
+      // Default user agent header
+      builder.setHeader(USER_AGENT_HEADER_NAME, "%s%s".format(DEFAULT_USER_AGENT_PREFIX, BuildInfo.version))
     }
 
     builder = extraBuilderFuncs(builder)

@@ -24,14 +24,12 @@ trait PlaintextHostReqCreator extends HostReqCreator {
 
 object :/ extends PlaintextHostReqCreator
 object host extends PlaintextHostReqCreator
-object http:// extends PlaintextHostReqCreator
 
 trait SecureHostReqCreator extends HostReqCreator {
   val scheme = "https"
 }
 
 object hostSecure extends SecureHostReqCreator
-object https:// extends SecureHostReqCreator
 
 object url extends (String => Req) {
   /**
