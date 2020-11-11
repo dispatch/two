@@ -16,6 +16,10 @@ trait HttpExecutor {
      apply(req, BodyHandlers.ofInputStream())
   }
 
+  def apply[T](req: Req, dispatchHandler: DispatchBodyHandler[T])(implicit executor: ExecutionContext): Future[HttpResponse[T]] = {
+     apply(req, dispatchHandler.toBodyHandler())
+  }
+
   def apply[T](req: Req, handler: HttpResponse.BodyHandler[T])(implicit executor: ExecutionContext): Future[HttpResponse[T]] = {
     apply(req.toRequest, handler)
   }

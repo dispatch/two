@@ -5,14 +5,18 @@ trait UrlSugar extends RequestSugar {
    * Retrieve the fully materialized URL.
    */
   def url: String = {
-    subject.toRequest.uri().toASCIIString()
+    subject.requestBuilder.url
   }
 
   /**
    * Append a segment to the URL.
    */
   def / (segment: String): Req = {
-    subject.setUrl(url + "/" + segment)
+    if (segment.nonEmpty) {
+      subject.setUrl(url + "/" + segment)
+    } else {
+      subject
+    }
   }
 
   /**

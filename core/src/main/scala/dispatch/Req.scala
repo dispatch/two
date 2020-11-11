@@ -12,7 +12,7 @@ import java.net.URI
   */
 case class Req(
   requestBuilder: DispatchRequestBuilder = DispatchRequestBuilder()
-) extends AuthSugar with UrlSugar with MethodSugar {
+) extends AuthSugar with UrlSugar with MethodSugar with ParamSugar {
   def subject = this
 
   /**
@@ -95,7 +95,8 @@ case class Req(
    */
   def setBody(data: Array[Byte]) = {
     Req(requestBuilder.copy(
-      bodyContent = DispatchBodyContent.OfByteArray(data)
+      bodyContent = DispatchBodyContent.OfByteArray(data),
+      headers = requestBuilder.headers :+ ("Content-Type" -> "text/plain; charset=UTF-8")
     )).implyMethod("POST")
   }
 

@@ -14,4 +14,8 @@ trait ParamSugar extends RequestSugar {
   def <<?(params: Iterable[(String, String)]) = {
     subject.addQueryParameters(params)
   }
+
+  def <:<(headers: Iterable[(String, String)]) = {
+    subject.addHeaders(headers.toSeq)
+  }
 }
