@@ -96,7 +96,7 @@ case class Req(
   def setBody(data: Array[Byte]) = {
     Req(requestBuilder.copy(
       bodyContent = DispatchBodyContent.OfByteArray(data)
-    ))
+    )).implyMethod("POST")
   }
 
   /**
@@ -105,7 +105,7 @@ case class Req(
   def setBody(inputStream: InputStream) = {
     Req(requestBuilder.copy(
       bodyContent = DispatchBodyContent.OfInputStream(inputStream)
-    ))
+    )).implyMethod("POST")
   }
 
   /**
@@ -114,7 +114,7 @@ case class Req(
   def setBody(data: String) = {
     Req(requestBuilder.copy(
       bodyContent = DispatchBodyContent.OfString(data)
-    ))
+    )).implyMethod("POST")
   }
 
   /**
@@ -123,7 +123,7 @@ case class Req(
   def setBody(file: Path) = {
     Req(requestBuilder.copy(
       bodyContent = DispatchBodyContent.OfFile(file)
-    ))
+    )).implyMethod("PUT")
   }
 
   /**
@@ -145,10 +145,16 @@ case class Req(
     ))
   }
 
+  def addQueryParameters(params: Iterable[(String, String)]) = {
+    Req(requestBuilder.copy(
+      queryParams = requestBuilder.queryParams.concat(params)
+    ))
+  }
+
   /**
    * Set query parameters, overwriting any pre-existing query parameters.
    */
-  def setQueryParameters(params: Map[String, String]) = {
+  def setQueryParameters(params: Iterable[(String, String)]) = {
     Req(requestBuilder.copy(
       queryParams = params
     ))

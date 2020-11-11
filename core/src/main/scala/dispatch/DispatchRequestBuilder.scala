@@ -12,7 +12,7 @@ case class DispatchRequestBuilder(
   method: String = "GET",
   methodExplicitlySet: Boolean = false,
   headers: Seq[(String, String)] = Seq.empty,
-  queryParams: Map[String, String] = Map.empty,
+  queryParams: Iterable[(String, String)] = List.empty,
   url: String = "",
   bodyContent: DispatchBodyContent = DispatchBodyContent.None,
   extraBuilderFuncs: HttpRequest.Builder => HttpRequest.Builder = identity
